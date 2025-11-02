@@ -30,7 +30,7 @@ def wordle():
     guess = request.args.get("guess")
     state = load_state()
     word = state["word"]
-    hint = hint = word[:2] + " ".join(["_"] * (len(word) - 2))
+    hint = word[:2] + " " + " ".join(["_"] * (len(word) - 2))
 
     if not guess:
         return f"Hint: {hint}"
@@ -38,7 +38,7 @@ def wordle():
         new_word = random.choice([w for w in WORDS if w != word])
         state["word"] = new_word
         save_state(state)
-        new_hint = new_word[:2] + "_"*(len(new_word)-2)
+        new_hint = new_word[:2] + " " + " ".join(["_"] * (len(new_word) - 2))
         return f"🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
     else:
         return f"Nope, {user}! Try again. Hint: {hint}"
