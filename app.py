@@ -2,7 +2,11 @@ from flask import Flask, request
 import random, json, os
 
 app = Flask(__name__)
-WORDS = ["plastic", "banana", "camera", "ocean", "marathon", "python"]
+WORDS = [
+    "plastic", "banana", "camera", "ocean", "marathon", "python",
+    "internet", "television", "mountain", "keyboard", "window", "penguin", "marlon", "kiwi", "football", "rocket"
+]
+
 STATE_FILE = "state.json"
 
 def load_state():
