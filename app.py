@@ -4,7 +4,7 @@ import random, json, os
 app = Flask(__name__)
 WORDS = [
     "plastic", "banana", "camera", "ocean", "marathon", "python",
-    "internet", "television", "mountain", "keyboard", "window", "penguin", "marlon", "kiwi", "football", "rocket"
+    "internet", "television", "mountain", "keyboard", "window", "penguin", "marlon", "kiwi", "football", "rocket", "gym", "jolly", "basketball", "gymshark", "gamble", "trickster", "fooled", "internet", "monk"
 ]
 
 STATE_FILE = "state.json"
@@ -30,7 +30,7 @@ def wordle():
     guess = request.args.get("guess")
     state = load_state()
     word = state["word"]
-    hint = word[:2] + "_"*(len(word)-2)
+    hint = hint = word[:2] + " ".join(["_"] * (len(word) - 2))
 
     if not guess:
         return f"Hint: {hint}"
