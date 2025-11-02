@@ -4,7 +4,9 @@ import random, json, os
 app = Flask(__name__)
 WORDS = [
     "plastic", "banana", "camera", "ocean", "marathon", "python",
-    "internet", "television", "mountain", "keyboard", "window", "penguin", "marlon", "kiwi", "football", "rocket", "gym", "jolly", "basketball", "gymshark", "gamble", "trickster", "fooled", "internet", "monk"
+    "internet", "television", "mountain", "keyboard", "window", "penguin", "marlon", "kiwi", "football", "rocket", "gym", "jolly", "basketball", "gymshark", "gamble", "trickster", "fooled", "internet", "monk", "notable", "fantasy", "quantum", "mystery", "glacier", "painter", "volcano", "pancake", "nebula",
+    "emerald", "serpent", "enchanted", "origami", "peacock", "vibrate", "zephyr", "latitude", "fortune",
+    "dragonfly", "clothes", "silence"
 ]
 
 STATE_FILE = "state.json"
