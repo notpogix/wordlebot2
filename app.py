@@ -41,7 +41,7 @@ def wordle():
         state["word"] = new_word
         save_state(state)
         new_hint = new_word[:2] + " " + " ".join(["_"] * (len(new_word) - 2))
-        return f"!give {user} 1000\n🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
+        return f"!give {user} 10000\n🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
     else:
         return f"Nope, {user}! Try again. Hint: {hint}"
 
