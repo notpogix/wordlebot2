@@ -6,7 +6,7 @@ WORDS = [
     "plastic", "banana", "camera", "ocean", "marathon", "python",
     "internet", "television", "mountain", "keyboard", "window", "penguin", "marlon", "kiwi", "football", "rocket", "gym", "jolly", "basketball", "gymshark", "gamble", "trickster", "fooled", "internet", "monk", "notable", "fantasy", "quantum", "mystery", "glacier", "painter", "volcano", "pancake", "nebula",
     "emerald", "serpent", "enchanted", "origami", "peacock", "vibrate", "zephyr", "latitude", "fortune",
-    "dragonfly", "clothes", "silence"
+    "dragonfly", "clothes", "silence", "twitch", "faze", "lacy", "mario", "minecraft", "stableronaldo", "silky", "cinna", "chatters", "sped", "drew", "europe", "controversy", "lemon", "telephone", "drake", "playlist", "album", "tiktok", "prime", "banned", "time", "crazy", "streamer"
 ]
 
 STATE_FILE = "state.json"
@@ -41,7 +41,7 @@ def wordle():
         state["word"] = new_word
         save_state(state)
         new_hint = new_word[:2] + " " + " ".join(["_"] * (len(new_word) - 2))
-        return f"!give {user} 10000\n🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
+        return f"!give {user} 20000\n🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
     else:
         return f"Nope, {user}! Try again. Hint: {hint}"
 
