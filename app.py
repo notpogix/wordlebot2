@@ -17,7 +17,7 @@ def load_state():
             return json.load(f)
     else:
         word = random.choice(WORDS)
-        state = {"word": word}
+        state = {"word": word, "wrong_guesses": 0}
         with open(STATE_FILE, "w") as f:
             json.dump(state, f)
         return state
@@ -32,18 +32,27 @@ def wordle():
     guess = request.args.get("guess")
     state = load_state()
     word = state["word"]
-    hint = word[:2] + " " + " ".join(["_"] * (len(word) - 2))
+    wrong_guesses = state.get("wrong_guesses", 0)
+
+    # Decide how many letters to show in hint
+    if wrong_guesses >= 5:
+        hint = word[:3] + " " + " ".join(["_"] * (len(word) - 3))
+    else:
+        hint = word[:2] + " " + " ".join(["_"] * (len(word) - 2))
 
     if not guess:
         return f"Hint: {hint}"
     if guess and guess.lower() == word.lower():
         new_word = random.choice([w for w in WORDS if w != word])
-        state["word"] = new_word
+        state = {"word": new_word, "wrong_guesses": 0}  # Reset the counter for the new word
         save_state(state)
         new_hint = new_word[:2] + " " + " ".join(["_"] * (len(new_word) - 2))
         return f"!give {user} 20000\n🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
     else:
-        return f"Nope, {user}! Try again. Hint: {hint}"
+        # Increment wrong guess counter
+        state["wrong_guesses"] = wrong_guesses + 1
+        save_state(state)
+        return f"Nope, {user}! Try again. Hint: {hint} (Incorrect attempts: {state['wrong_guesses']})"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
