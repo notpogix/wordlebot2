@@ -6,7 +6,8 @@ WORDS = [
     "plastic", "banana", "camera", "ocean", "marathon", "python",
     "internet", "television", "mountain", "keyboard", "window", "penguin", "marlon", "kiwi", "football", "rocket", "gym", "jolly", "basketball", "gymshark", "gamble", "trickster", "fooled", "internet", "monk", "notable", "fantasy", "quantum", "mystery", "glacier", "painter", "volcano", "pancake", "nebula",
     "emerald", "serpent", "enchanted", "origami", "peacock", "vibrate", "zephyr", "latitude", "fortune",
-    "dragonfly", "clothes", "silence", "twitch", "faze", "lacy", "mario", "minecraft", "stableronaldo", "silky", "cinna", "chatters", "sped", "drew", "europe", "controversy", "lemon", "telephone", "drake", "playlist", "album", "tiktok", "prime", "banned", "time", "crazy", "streamer"
+    "dragonfly", "clothes", "silence", "twitch", "faze", "lacy", "mario", "minecraft", "stableronaldo", "silky", "cinna", "chatters", "sped", "drew", "europe", "controversy", "lemon", "telephone", "drake", "playlist", "album", "tiktok", "prime", "banned", "time", "crazy", "streamer", "arsenal", "chelsea", "liverpool", "manchester", "united", "city", "tottenham", "everton", "leicester", "wolves", "villa", "newcastle", "brighton", "palace", "fulham", "brentford", "forest", "bournemouth", "southampton", "barcelona", "madrid", "atletico", "sevilla", "valencia", "villarreal", "betis", "sociedad", "athletic", "bilbao", "getafe", "osasuna", "mallorca", "girona", "almeria", "juventus", "milan", "inter", "napoli", "roma", "lazio", "fiorentina", "atalanta", "torino", "bologna", "genoa", "sassuolo", "udinese", "verona", "bayern", "dortmund", "leipzig", "leverkusen", "frankfurt", "gladbach", "wolfsburg", "freiburg"
+
 ]
 
 STATE_FILE = "state.json"
@@ -34,17 +35,20 @@ def wordle():
     word = state["word"]
     wrong_guesses = state.get("wrong_guesses", 0)
 
-    # Decide how many letters to show in hint
-    if wrong_guesses >= 5:
-        hint = word[:3] + " " + " ".join(["_"] * (len(word) - 3))
-    else:
-        hint = word[:2] + " " + " ".join(["_"] * (len(word) - 2))
+    # Calculate how many letters to reveal (starts at 2, adds 1 every 5 wrong guesses)
+    letters_to_show = 2 + (wrong_guesses // 5)
+    letters_to_show = min(letters_to_show, len(word))  # Don't exceed word length
+
+    # Build the hint
+    revealed = word[:letters_to_show]
+    hidden = " ".join(["_"] * (len(word) - letters_to_show))
+    hint = revealed + (" " + hidden if hidden else "")
 
     if not guess:
         return f"Hint: {hint}"
     if guess and guess.lower() == word.lower():
         new_word = random.choice([w for w in WORDS if w != word])
-        state = {"word": new_word, "wrong_guesses": 0}  # Reset the counter for the new word
+        state = {"word": new_word, "wrong_guesses": 0}  # Reset counter
         save_state(state)
         new_hint = new_word[:2] + " " + " ".join(["_"] * (len(new_word) - 2))
         return f"!give {user} 20000\n🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
@@ -52,7 +56,13 @@ def wordle():
         # Increment wrong guess counter
         state["wrong_guesses"] = wrong_guesses + 1
         save_state(state)
-        return f"Nope, {user}! Try again. Hint: {hint} (Incorrect attempts: {state['wrong_guesses']})"
+        # Recalculate hint with new guess count
+        letters_to_show = 2 + (state["wrong_guesses"] // 5)
+        letters_to_show = min(letters_to_show, len(word))
+        revealed = word[:letters_to_show]
+        hidden = " ".join(["_"] * (len(word) - letters_to_show))
+        hint = revealed + (" " + hidden if hidden else "")
+        return f"Nope, {user}! Try again. Hint: {hint}"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
