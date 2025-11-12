@@ -67,7 +67,7 @@ def wordle():
         state = {"word": new_word, "wrong_guesses": 0}  # Reset counter
         save_state(state)
         new_hint = new_word[:2] + " " + " ".join(["_"] * (len(new_word) - 2))
-        return f"!give {user} 20000\n🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
+        return f"!give {user} 20000\n FeelsGoodMan 🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
     else:
         # Increment wrong guess counter
         state["wrong_guesses"] = wrong_guesses + 1
@@ -78,7 +78,7 @@ def wordle():
         revealed = word[:letters_to_show]
         hidden = " ".join(["_"] * (len(word) - letters_to_show))
         hint = revealed + (" " + hidden if hidden else "")
-        return f"Nope, {user}! Try again. Hint: {hint}"
+        return f"NOPERS {user}! Try again. Hint: {hint}"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
