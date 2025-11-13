@@ -67,7 +67,7 @@ def wordle():
         state = {"word": new_word, "wrong_guesses": 0}  # Reset counter
         save_state(state)
         new_hint = new_word[:2] + " " + " ".join(["_"] * (len(new_word) - 2))
-        return f"/me !addpoints {user} 20000\n FeelsGoodMan 🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
+        return f"/me !give {user} 20000\n FeelsGoodMan 🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
     else:
         # Increment wrong guess counter
         state["wrong_guesses"] = wrong_guesses + 1
