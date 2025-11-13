@@ -1,7 +1,7 @@
 from flask import Flask, request
 import random, json, os
 
-app = Flask(__name__)
+app = Flask(_name_)
 WORDS = [
     "absence", "balloon", "cabinetry", "deliver", "elasticity", "flamingo", "granite", "harvests", "imagine", "journeys", "kingdoms", "luggage", "machine", "nucleus", "octagon", "paradox", "quantum", "radiant", "science", "temples", "utility", "vulture", "warrior", "zephyrs",
 "alchemy", "balance", "cascade", "decline", "eclipse", "forever", "gravity", "harbour", "immense", "justice", "lantern", "magnets", "neutral", "organic", "program", "reality", "silence", "tribute", "unknown", "venture",
@@ -67,7 +67,7 @@ def wordle():
         state = {"word": new_word, "wrong_guesses": 0}  # Reset counter
         save_state(state)
         new_hint = new_word[:2] + " " + " ".join(["_"] * (len(new_word) - 2))
-        return f"/me !give {user} 20000\n FeelsGoodMan 🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
+        return f"/me !addpoints {user} 20000\n FeelsGoodMan 🎉 {user} guessed it! The word was '{word}'. New hint: {new_hint}"
     else:
         # Increment wrong guess counter
         state["wrong_guesses"] = wrong_guesses + 1
@@ -80,5 +80,5 @@ def wordle():
         hint = revealed + (" " + hidden if hidden else "")
         return f"/me NOPERS {user}! Try again. Hint: {hint}"
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
